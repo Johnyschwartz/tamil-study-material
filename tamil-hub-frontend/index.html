@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ta" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>தமிழ் கற்றல் மையம் · Tamil Study Hub (11th &amp; 12th)</title>
+  <meta name="description" content="11 மற்றும் 12-ஆம் வகுப்பு மேல்நிலைத் தமிழ் பாடக் குறிப்புகள், மாதிரி வினாத்தாள்கள் மற்றும் வழிகாட்டல் மையம் - எலிசபெத் ராத்தி.">
+  <meta name="theme-color" content="#1e1b4b">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/emblem.jpg">
+  
+  <!-- Modern Typography: Plus Jakarta Sans, Outfit, Noto Sans Tamil, Mukta Malar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Reading / Scroll Progress Bar -->
+  <div id="scroll-progress-bar" class="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Ambient Animated Glowing Orbs Background -->
+  <div class="ambient-glow-container" aria-hidden="true">
+    <div class="glow-orb orb-amber"></div>
+    <div class="glow-orb orb-indigo"></div>
+    <div class="glow-orb orb-rose"></div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-emblem-wrap">
+          <img src="assets/emblem.jpg" alt="Tamil Study Hub Emblem" class="brand-emblem">
+        </div>
+        <div class="brand-text">
+          <h1>
+            <span id="brand-title">தமிழ் கற்றல் மையம்</span>
+            <span id="brand-sub" style="opacity: 0.85; font-size: 0.85em; font-weight: 500;">· Tamil Study Hub</span>
+          </h1>
+          <div class="brand-sub">
+            <span id="brand-grade">11th &amp; 12th Higher Secondary</span>
+            <span class="teacher-pill" id="brand-teacher">👩‍🏫 எலிசபெத் ராத்தி (Elizabeth Rathi, M.A., B.Ed.)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Translation / Language Switcher -->
+        <div class="lang-switch-wrap" id="lang-switcher">
+          <button type="button" class="lang-pill-btn active" data-lang="ta" title="தமிழ் மொழி">தமிழ்</button>
+          <button type="button" class="lang-pill-btn" data-lang="en" title="English Language">English</button>
+        </div>
+
+        <!-- API Connection Status -->
+        <span id="api-status" class="api-status-pill" title="Checking server connection...">
+          <span class="dot"></span>
+          <span id="api-status-text">Connecting…</span>
+        </span>
+
+        <!-- Light / Dark Theme Switcher -->
+        <button id="theme-toggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
+
+        <!-- Current User Role Badge -->
+        <span id="user-badge" class="user-badge" style="display:none">👨‍🎓 Student</span>
+
+        <!-- Logout Action Button -->
+        <button id="out" class="btn-logout" style="display:none">
+          <span>🚪</span>
+          <span id="btn-logout-label">Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Wisdom Couplet (திருக்குறள்) Strip -->
+  <div class="wisdom-strip">
+    <div class="wisdom-content">
+      <span class="wisdom-tamil" id="wisdom-line-1">📖 "கற்க கசடறக் கற்பவை கற்றபின் நிற்க அதற்குத் தக" — திருக்குறள் 391</span>
+      <span class="wisdom-en" id="wisdom-line-2">("Learn flawlessly whatever is to be learned, and live accordingly.")</span>
+    </div>
+  </div>
+
+  <!-- Main Content Application -->
+  <main>
+    <!-- Controls Container: Class Selector and Search -->
+    <div class="controls-card" id="search-controls">
+      <div class="controls-row">
+        <!-- Hidden select for full programmatic compatibility -->
+        <select id="cls">
+          <option value="">All classes</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+
+        <!-- Modern Visual Segmented Pill Control -->
+        <div class="class-segmented" id="class-pills">
+          <button type="button" class="class-pill-btn active" data-class="" id="btn-class-all">அனைத்தும் (All)</button>
+          <button type="button" class="class-pill-btn" data-class="11" id="btn-class-11">11-ஆம் வகுப்பு</button>
+          <button type="button" class="class-pill-btn" data-class="12" id="btn-class-12">12-ஆம் வகுப்பு</button>
+        </div>
+
+        <!-- Search Input Bar -->
+        <div class="search-wrapper">
+          <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="q" class="search-input" placeholder="தேடுக / Search lessons, poetry, question papers, videos…" autocomplete="off">
+          <button type="button" id="search-clear" class="search-clear-btn" style="display:none;" title="Clear Search">&times;</button>
+          <kbd class="search-kbd">/</kbd>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-container" id="tabs">
+      <button data-t="lesson" class="tab-btn on">
+        <span>📚</span>
+        <span id="tab-label-lesson">பாடங்கள் (Lessons)</span>
+        <span class="tab-count" id="count-lesson">0</span>
+      </button>
+      <button data-t="homework" class="tab-btn">
+        <span>✍️</span>
+        <span id="tab-label-homework">வீட்டுப்பாடம் (Homework)</span>
+        <span class="tab-count" id="count-homework">0</span>
+      </button>
+      <button data-t="paper" class="tab-btn">
+        <span>📝</span>
+        <span id="tab-label-paper">வினாத்தாள்கள் (Papers)</span>
+        <span class="tab-count" id="count-paper">0</span>
+      </button>
+      <button data-t="video" class="tab-btn">
+        <span>🎬</span>
+        <span id="tab-label-video">காணொளிகள் (Videos)</span>
+        <span class="tab-count" id="count-video">0</span>
+      </button>
+      <button data-t="admin" class="tab-btn tab-admin" style="display:none;">
+        <span>🔐</span>
+        <span id="tab-label-admin">ஆசிரியர் தளம் (Admin)</span>
+      </button>
+    </div>
+
+    <!-- Category / Year Filters -->
+    <div id="filters" class="filters-bar"></div>
+
+    <!-- Results Meta Counter -->
+    <div id="results-meta" class="results-meta"></div>
+
+    <!-- Dynamic Content View -->
+    <div id="view" class="content-view"></div>
+  </main>
+
+  <!-- PDF Preview Modal -->
+  <div id="pdf-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-card pdf-modal-card">
+      <div class="pdf-modal-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.4rem;">📄</span>
+          <div>
+            <h4 id="pdf-modal-title" style="margin:0;font-size:1rem;color:var(--ink-primary);">Document Preview</h4>
+            <span id="pdf-modal-sub" style="font-size:0.78rem;color:var(--ink-muted);">Tamil Study Hub PDF Reader</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <a id="pdf-modal-external" href="#" target="_blank" class="btn-modal-cancel" style="padding:5px 12px;font-size:0.8rem;text-decoration:none;">Open New Tab ↗</a>
+          <button id="pdf-modal-close" class="btn-close-modal">&times;</button>
+        </div>
+      </div>
+      <iframe id="pdf-modal-frame" class="pdf-modal-frame" title="PDF Document Viewer"></iframe>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Dialog Modal -->
+  <div id="confirm-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h4 class="modal-title" id="confirm-modal-title">Delete Confirmation</h4>
+        <button id="confirm-modal-close" class="btn-close-modal">&times;</button>
+      </div>
+      <p id="confirm-modal-msg" style="color:var(--ink-secondary);font-size:0.95rem;line-height:1.5;">Are you sure you want to delete this study material?</p>
+      <div class="modal-actions">
+        <button id="confirm-modal-cancel" class="btn-modal-cancel">Cancel</button>
+        <button id="confirm-modal-btn" class="btn-modal-confirm">Delete Item</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.2rem;">📖</span>
+        <span style="font-weight:600;color:var(--ink-primary);" id="footer-brand">தமிழ் கற்றல் மையம் (Tamil Study Hub)</span>
+      </div>
+      <div id="footer-grade">11-ஆம் &amp; 12-ஆம் வகுப்பு பாடத்திட்டம் · Higher Secondary Tamil</div>
+      <div id="footer-teacher">வழிகாட்டுதல்: <strong style="color:var(--brand-primary);">எலிசபெத் ராத்தி (Elizabeth Rathi)</strong></div>
+    </div>
+  </footer>
+
+  <!-- Floating Scroll To Top Button with Circular Progress Ring -->
+  <button id="scroll-top-btn" class="scroll-top-btn" title="Scroll to Top" aria-label="Scroll to Top">
+    <svg class="scroll-ring-svg" viewBox="0 0 36 36">
+      <path class="scroll-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+      <path id="scroll-ring-fill" class="scroll-ring-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+    </svg>
+    <span class="scroll-top-arrow">↑</span>
+  </button>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
