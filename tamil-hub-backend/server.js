@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -7,8 +8,11 @@ const multer = require("multer");
 const { MongoClient, ObjectId, Binary } = require("mongodb");
 
 const app = express();
+const publicPath = path.join(__dirname, "public");
+
 app.use(express.json({ limit: "1mb" }));
 app.use(cors({ origin: process.env.ALLOWED_ORIGIN || "*" }));
+app.use(express.static(publicPath));
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const SECRET = process.env.JWT_SECRET;
@@ -110,7 +114,15 @@ app.put("/api/student-password", auth("admin"), async (req, res) => {
   res.json({ ok: true });
 });
 
-app.get("/", (req, res) => res.send("Tamil Study Hub API is running"));
+app.get("/api/health", (req, res) => res.json({ status: "ok", message: "Tamil Study Hub API is running" }));
+
+// Client-side routing catch-all: serve index.html for all non-API GET requests
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "API endpoint not found" });
+  }
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 (async () => {
   await client.connect();
